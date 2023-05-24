@@ -4,6 +4,29 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AssemblyPublicizer" Version="1.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+    <Target Name="Publicize" AfterTargets="Clean">
+	    <ItemGroup>
+		    <!-- Use $(KingmakerPath)\Kingmaker_Data\Managed\Assembly-CSharp.dll for Kingmaker -->
+		    <Assemblies Include="$(WrathPath)\Wrath_Data\Managed\Assembly-CSharp.dll" />
+	    </ItemGroup>
+
+	    <PublicizeTask InputAssemblies="@(Assemblies)" OutputDir="$(SolutionDir)lib/" />
+    </Target>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(SolutionDir)lib\Assembly-CSharp_public.dll</HintPath>
+		<Private>False</Private>
+    </Reference>
+  </ItemGroup>
 
 </Project>
